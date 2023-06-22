@@ -6,7 +6,7 @@ plugins {
 
 group = "io.github.zhangt2333"
 description = "test-maven-publish"
-version = "0.0.3-SNAPSHOT"
+version = "0.0.3"
 val projectUrl = "https://github.com/zhangt2333/test-maven-publish"
 val isSnapshot = version.toString().endsWith("-SNAPSHOT")
 
