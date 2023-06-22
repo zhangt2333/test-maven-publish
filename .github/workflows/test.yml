@@ -4,7 +4,6 @@ on:
   push:
   pull_request:
   workflow_dispatch: # add manually button
-  workflow_call:
 
 jobs:
   test:
