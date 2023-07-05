@@ -5,7 +5,8 @@
 
 [![test](https://github.com/zhangt2333/test-maven-publish/actions/workflows/test.yml/badge.svg)](https://github.com/zhangt2333/test-maven-publish/actions/workflows/test.yml)
 [![java](https://img.shields.io/badge/Java-17-informational)](http://openjdk.java.net/)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.zhangt2333/test-maven-publish.svg)](https://search.maven.org/artifact/io.github.zhangt2333/test-maven-publish)
+[![license](https://img.shields.io/github/license/zhangt2333/test-maven-publish)](https://github.com/zhangt2333/test-maven-publish/blob/main/LICENSE)
+[![Maven Central](https://img.shields.io/badge/dynamic/xml.svg?label=maven-central&color=f1834d&query=//metadata/versioning/latest&url=https://repo1.maven.org/maven2/io/github/zhangt2333/test-maven-publish/maven-metadata.xml)](https://search.maven.org/artifact/io.github.zhangt2333/test-maven-publish)
 [![javadoc](https://javadoc.io/badge2/io.github.zhangt2333/test-maven-publish/javadoc.svg)](https://javadoc.io/doc/io.github.zhangt2333/test-maven-publish)
 
 </div>
