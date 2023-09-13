@@ -4,11 +4,31 @@ plugins {
     signing
 }
 
-group = "io.github.zhangt2333"
-description = "test-maven-publish"
-version = "0.0.4"
-val projectUrl = "https://github.com/zhangt2333/test-maven-publish"
-val isSnapshot = version.toString().endsWith("-SNAPSHOT")
+fun Project.getProperty(key: String) =
+    providers.gradleProperty(key).get()
+
+val Project.projectGroupId: String
+    get() = getProperty("projectGroupId")
+
+val Project.projectArtifactId: String
+    get() = getProperty("projectArtifactId")
+
+val Project.projectVersion: String
+    get() = getProperty("projectVersion")
+
+val Project.projectUrl: String
+    get() = getProperty("projectUrl")
+
+val Project.projectDescription: String
+    get() = getProperty("projectDescription")
+
+val Project.isSnapshot: Boolean
+    get() = projectVersion.endsWith("-SNAPSHOT")
+
+
+group = projectGroupId
+description = projectArtifactId
+version = projectVersion
 
 repositories {
     mavenCentral()
@@ -68,8 +88,8 @@ publishing {
             }
             // metadata
             pom {
-                name.set(project.description)
-                description.set("Just for testing maven publish")
+                name.set(projectArtifactId)
+                description.set(projectDescription)
                 url.set(projectUrl)
                 licenses {
                     license {
