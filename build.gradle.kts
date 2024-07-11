@@ -87,6 +87,9 @@ publishing {
                 }
             }
             // metadata
+            groupId = projectGroupId
+            version = projectVersion
+            artifactId = projectArtifactId
             pom {
                 name.set(projectArtifactId)
                 description.set(projectDescription)
