@@ -60,9 +60,9 @@ publishing {
     if (mavenCentralUsername != null && mavenCentralPassword != null) {
         repositories {
             val repoUrl = if (isSnapshot) {
-                "https://s01.oss.sonatype.org/content/repositories/snapshots"
+                "https://ossrh-staging-api.central.sonatype.com/content/repositories/snapshots"
             } else {
-                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
+                "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2"
             }
             maven {
                 name = "Sonatype"
