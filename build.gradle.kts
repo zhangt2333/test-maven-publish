@@ -123,3 +123,56 @@ signing {
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign(publishing.publications["mavenJava"])
 }
+
+tasks.named("publish") {
+    doLast {
+        if (!isSnapshot && mavenCentralUsername != null && mavenCentralPassword != null) {
+            uploadToPortal(mavenCentralUsername!!, mavenCentralPassword!!)
+        }
+    }
+}
+
+fun uploadToPortal(username: String, password: String) {
+    val baseUrl = "https://ossrh-staging-api.central.sonatype.com"
+    val credentials = `java.util`.Base64.getEncoder()
+        .encodeToString("$username:$password".toByteArray())
+    val client = `java.net`.http.HttpClient.newHttpClient()
+
+    fun sendReq(
+        url: String,
+        method: String = "GET",
+        body: String = ""
+    ): java.net.http.HttpResponse<String> {
+        val req = `java.net`.http.HttpRequest.newBuilder()
+            .uri(`java.net`.URI(url))
+            .header("Authorization", "Bearer $credentials")
+            .header("Content-Type", "application/json")
+            .method(method, if (body.isEmpty())
+                `java.net`.http.HttpRequest.BodyPublishers.noBody()
+            else `java.net`.http.HttpRequest.BodyPublishers.ofString(body))
+            .build()
+        val respBodyHandler = `java.net`.http.HttpResponse.BodyHandlers.ofString()
+        return client.send(req, respBodyHandler)
+    }
+
+    try {
+        // Search open repositories
+        val searchResp = sendReq("$baseUrl/manual/search/repositories?state=open&ip=client")
+        if (searchResp.statusCode() != 200) {
+            println("Failed to search repositories, status code: ${searchResp.statusCode()}")
+            return
+        }
+
+        // Extract and close repositories
+        """"key"\s*:\s*"([^"]+)"""".toRegex()
+            .findAll(searchResp.body())
+            .forEach { match ->
+                val repoKey = match.groupValues[1]
+                sendReq("$baseUrl/manual/upload/repository/$repoKey?publishing_type=user_managed",
+                    "POST", "{}")
+                println("Upload staging repository: $repoKey")
+            }
+    } catch (e: Exception) {
+        println("Failed to upload staging repositories: ${e.message}")
+    }
+}
