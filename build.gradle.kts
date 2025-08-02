@@ -6,6 +6,7 @@ import java.util.Base64
 
 plugins {
     java
+    jacoco
     `maven-publish`
     signing
 }
@@ -49,6 +50,19 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// jacoco
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
+}
+
+// Automatically agree the Gradle ToS when running Gradle with '--scan' option
+extensions.findByName("buildScan")?.withGroovyBuilder {
+    setProperty("termsOfServiceUrl", "https://gradle.com/terms-of-service")
+    setProperty("termsOfServiceAgree", "yes")
 }
 
 java {
