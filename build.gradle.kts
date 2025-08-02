@@ -59,12 +59,6 @@ tasks.jacocoTestReport {
     }
 }
 
-// Automatically agree the Gradle ToS when running Gradle with '--scan' option
-extensions.findByName("buildScan")?.withGroovyBuilder {
-    setProperty("termsOfServiceUrl", "https://gradle.com/terms-of-service")
-    setProperty("termsOfServiceAgree", "yes")
-}
-
 java {
     withJavadocJar()
     withSourcesJar()
